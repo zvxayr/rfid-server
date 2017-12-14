@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+</head>
+<body>
+	<table>
+		<thead>
+			<tr>
+				<th> id </th>
+				<th> name </th>
+			</tr>
+		</thead>
+		<tbody></tbody>
+	</table>
+	<script src='js/request.js'></script>
+	<script>
+		let table = document.querySelector('table > tbody')
+		request.get('api/humans', {
+				query: { limit: 5, skip: 0 },
+				body: { _id: 1, name: 1 }
+			})
+			.then(response => {
+				// response.headers.forEach(console.log)
+				return response.json()
+			})
+			.then(humans => humans.forEach(human => {
+				let tr	= document.createElement('tr')
+				let id	= document.createElement('td')
+				let name = document.createElement('td')
+
+				table.append(tr)
+				tr.append(id)
+				tr.append(name)
+
+				id.append(human._id || '')
+				name.append(human.name || '')
+			}))
+			.catch(console.error)
+	</script>
+</body>
+</html>
