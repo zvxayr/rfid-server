@@ -1,13 +1,12 @@
 const mongoose = require('mongoose')
 
 const Schema = mongoose.Schema
-let ObjectId = Schema.ObjectId
+const ObjectId = Schema.ObjectId
 
-let name = 'History'
+const name = 'Interaction'
 
-let schema = {
-	human: ObjectId,
-	location: ObjectId,
+const schema = {
+	user: ObjectId,
 	timestamp: Date
 }
 

@@ -26,7 +26,4 @@ let db = fs
         return acc
     }, {})
 
-// expose the mongoose instance
-db.mongoose = mongoose
-
 module.exports = db

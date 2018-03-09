@@ -3,13 +3,8 @@ const fs = require('fs-extra')
 let prefix = ''
 
 function route(router) {
-    router.get('/', async (ctx) => {
-        ctx.body = await fs.readFile('./views/root.html', 'utf8')
-    })
-
-    router.post('/', async (ctx) => {
-    	console.log(ctx.request.body)
-    	ctx.body = 'received data!'
+    router.get('/', async ctx => {
+        ctx.body = await fs.readFile('./views/home.html', 'utf8')
     })
 
     return router
