@@ -20,6 +20,8 @@ exports.createOne = async ctx => {
     try {
         let record = await new Interaction(ctx.request.body).save()
 
+        io.emit('new entry', record)
+
         ctx.status = 201 // Created
         ctx.set('location', `api/interactions/${record._id}`)
     } catch(e) {
