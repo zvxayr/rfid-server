@@ -7,42 +7,42 @@
     <link type="text/css" rel="stylesheet" href="/css/materialize.min.css"  media="screen,projection"/>
     <!--Let browser know website is optimized for mobile-->
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-	<title> Live Data Test </title>
-	<style>
-		body {
-			min-height: 100vh;
-		}
+    <title> Live Data Test </title>
+    <style>
+        body {
+            min-height: 100vh;
+        }
 
-		#content {
-			display: flex;
-			flex-direction: column;
-			height: 100vh;
-			align-items: center;
-			justify-content: center;
-		}
-	</style>
+        #content {
+            display: flex;
+            flex-direction: column;
+            height: 100vh;
+            align-items: center;
+            justify-content: center;
+        }
+    </style>
 </head>
 <body>
-	<div id='content'>
-		<div><h1 id='data'> Data </h1></div>
-		<div><h2 id='action'> Action </h2></div>
-	</div>
+    <div id='content'>
+        <div><h1 id='data'> Data </h1></div>
+        <div><h2 id='action'> Action </h2></div>
+    </div>
 
-	<script type="text/javascript" src="/socket.io/socket.io.js"></script>
+    <script type="text/javascript" src="/socket.io/socket.io.js"></script>
     <script type="text/javascript" src="/js/jquery-3.3.1.min.js"></script>
     <script type="text/javascript" src="/js/materialize.min.js"></script>
-	<script>
-		const socket = io();
+    <script>
+        const socket = io();
 
-		socket.on('accept', data => {
-			$('#data').html(data);
-			$('#action').html('accept').addClass('green-text text-accent-4').removeClass('red-text text-accent-4')
-		})
+        socket.on('accept', data => {
+            $('#data').html(data);
+            $('#action').html('accept').addClass('green-text text-accent-4').removeClass('red-text text-accent-4')
+        })
 
-		socket.on('reject', data => {
-			$('#data').html(data)
-			$('#action').html('reject').addClass('red-text text-accent-4').removeClass('green-text text-accent-4')
-		})
-	</script>
+        socket.on('reject', data => {
+            $('#data').html(data)
+            $('#action').html('reject').addClass('red-text text-accent-4').removeClass('green-text text-accent-4')
+        })
+    </script>
 </body>
 </html>

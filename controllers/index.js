@@ -11,7 +11,7 @@ function factory() {
         .map(file => {
             let { prefix, route } = require(`./${file}`)
             let router = route(new Router({ prefix }), ...arguments)
-
+            
             return [router.routes(), router.allowedMethods()]
         })
 

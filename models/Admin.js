@@ -2,19 +2,18 @@ const mongoose = require('mongoose')
 const bcrypt   = require('bcrypt')
 const saltRounds = 10
 
-const name = 'User'
+const name = 'Admin'
 
 const schema = new mongoose.Schema({
-    name: { type: String, unique: true },
+    name: { type: String, unique: true, trim: true },
     sex: { type: String, enum: ['M', 'F'] },
-    cardUID: { type: String, unique: true },
-    username: { type: String, unique: true },
+    username: { type: String, unique: true, trim: true },
     email: { type: String, trim: true },
     password: String,
 })
 
 schema.pre('save', async function() {
-    if (!this.isModified('password')) return
+    if (!this.isModified('password')) return;
 
     this.password = await this.encryptPassword(this.password)
 })

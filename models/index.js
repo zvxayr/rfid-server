@@ -8,22 +8,13 @@ const Schema = mongoose.Schema
 mongoose.Promise = global.Promise
 
 // connect to mongodb database
-mongoose.connect('mongodb://localhost:27017/rfid', { useMongoClient: true })
+mongoose.connect('mongodb://localhost:27017/rfid')
 
-let db = fs
+module.exports = fs
     .readdirSync(__dirname)
     .filter(file => path.extname(file) == '.js' && path.basename(file, '.js') != 'index')
-    .map(file => {
-        let object = require(`./${file}`)
-        let name = object.name
-        let schema = new Schema(object.schema)
-        let model = mongoose.model(name, schema, name)
-        
-        return { name, model }
-    })
-    .reduce((acc, val) => {
-        acc[val.name] = val.model
-        return acc
+    .map(file => require(`./${file}`))
+    .reduce((db, model) => {
+        db[model.collection.collectionName] = model
+        return db
     }, {})
-
-module.exports = db

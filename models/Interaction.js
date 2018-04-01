@@ -5,11 +5,13 @@ const ObjectId = Schema.ObjectId
 
 const name = 'Interaction'
 
-const schema = {
-	user: ObjectId,
-	timestamp: Date
-}
+const schema = new mongoose.Schema({
+    userID: ObjectId,
+    menuID: ObjectId,
+    meal: { type: String, enum: ['B', 'L', 'D'] },
+    timestamp: Date
+})
 
-module.exports = {
-	name, schema
-}
+const model = mongoose.model(name, schema, name)
+
+module.exports = model

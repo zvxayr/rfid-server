@@ -1,15 +1,14 @@
-const ejs = require('ejs')
 const fs  = require('fs-extra')
 
 let prefix = ''
 
 function route(router) {
     router.get('/', async ctx => {
-    	ctx.body = await ctx.render('dashboard')
+        ctx.body = await ctx.render('landing')
     })
 
     router.get('/test', async ctx => {
-    	ctx.body = await ctx.render('test')
+        ctx.body = await ctx.render('test')
     })
 
     return router
