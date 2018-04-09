@@ -1,3 +1,6 @@
+* {
+	box-sizing: border-box;
+}
 html, body {
     margin: 0;
     padding: 0;
@@ -5,16 +8,17 @@ html, body {
 }
 
 body {
-    min-width: 100vw;
-    max-width: 100vw;
     min-height: 100vh;
 	line-height: 1;
-	color: black;
-	background: white;
 }
 
 :focus {
 	outline: 0;
+}
+
+a:visited, a:link, a:active {
+    text-decoration: none;
+    color: inherit;
 }
 
 ol, ul {

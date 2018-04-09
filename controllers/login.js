@@ -12,22 +12,29 @@ function route(router) {
         const { username, password } = ctx.request.body
         let user = null
 
+        delete ctx.session.admin
+        delete ctx.session.user
+
         user = await models.Admin.findOne({ username })
         if (user && user.authenticate(password)) {
-            // user is an admin
-            ctx.body = 'admin'
+            ctx.status = 278
+            ctx.session.admin = true
+            ctx.session.id = user.id
+            ctx.redirect('/dashboard')
             return
         }
 
         user = await models.User.findOne({ username })
         if (user && user.authenticate(password)) {
-            // user is a student
-            ctx.body = 'student'
+            ctx.status = 278
+            ctx.session.user = true
+            ctx.session.id = user.id
+            ctx.redirect('/dashboard')
             return
         }
 
-        // invalid credential
-        ctx.body = 'none'
+        ctx.status = 403
+        ctx.body = { error: 'invalid username or password' }
     })
 
     return router

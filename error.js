@@ -5,6 +5,8 @@ const lookup = {
 async function handleError(ctx, next) {
     try {
         await next()
+        if (ctx.body) return
+        
         const status = ctx.status || 404
         if (status === 404) {
             ctx.throw(404)

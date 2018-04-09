@@ -11,6 +11,11 @@ function route(router) {
         ctx.body = await ctx.render('test')
     })
 
+    router.get('/logout', async ctx => {
+        ctx.session = null
+        ctx.redirect('/login')
+    })
+
     return router
 }
 
