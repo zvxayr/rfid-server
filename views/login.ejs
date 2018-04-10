@@ -6,10 +6,38 @@
     <title> Login </title>
 </head>
 <body>
-    <form method='POST'>
+    <form id='login' method='POST'>
         <input type='text' name='username'>
         <input type='password' name='password'>
         <input type='submit'>
     </form>
+
+    <script type='text/javascript'>
+        const $login = document.getElementById('login');
+
+        $login.addEventListener('submit', async (e) => {
+            e.preventDefault();
+
+            const response = await fetch('/login', {
+                method: 'POST',
+                body: JSON.stringify({
+                    username: $login.username.value,
+                    password: $login.password.value
+                }),
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-HTTP-Method-Override': 'POST'
+                },
+                follow: 0,
+                credentials: 'same-origin'
+            });
+
+            console.log(response)
+
+            if (response.status == 278) {
+                window.location.assign((await response.json()).path)
+            }
+        });
+    </script>
 </body>
 </html>

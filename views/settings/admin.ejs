@@ -1,19 +1,45 @@
-<div class='security'>
-    <div>
-        Change username
-    </div>
-    <div>
-        Change password
-    </div>
-    <div>
-        Change email
-    </div>
-</div>
-<div class='admin'>
-    <div>
-        Create New User
-    </div>
-    <div>
-        Create New Admin
-    </div>
-</div>
+<table>
+	<tbody>
+		<tr>
+			<td> Username </td>
+			<td> <input id='username' type='text' name='username' value='<%= username %>'> </td>
+			<td> <button id='userbtn'> Save </button> </td>
+		</tr>
+		<tr>
+			<td> Password </td>
+			<td> <input id='password' type='password' name='username' autocomplete='new-password'> </td>
+			<td> <button id='passbtn'> Save </button> </td>
+		</tr>
+	</tbody>
+</table>
+<span id='feedback'></span>
+
+<script type='text/javascript'>
+	const $user = document.getElementById('username');
+	const $ubtn = document.getElementById('userbtn');
+	const $pass = document.getElementById('password');
+	const $pbtn = document.getElementById('passbtn');
+
+	const options = {
+		method: 'POST',
+		headers: {
+			'Content-Type': 'application/json',
+			'X-HTTP-Method-Override': 'POST'
+		},
+		credentials: 'same-origin'
+	}
+
+	$ubtn.addEventListener('click', (e) => {
+		fetch('/settings/username', {
+			body: JSON.stringify({ username: $user.value }),
+			...options
+		}).then(console.log, console.log);
+	});
+
+	$pbtn.addEventListener('click', (e) => {
+		fetch('/settings/password', {
+			body: JSON.stringify({ password: $pass.value }),
+			...options
+		}).then(console.log, console.log);
+	});
+</script>
