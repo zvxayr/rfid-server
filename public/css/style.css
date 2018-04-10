@@ -5,6 +5,7 @@
     grid-template-columns: 1fr;
     grid-template-areas: 'head' 'nav' 'main';
 
+    background-color: whitesmoke;
     font-family: 'Segoe UI Light';
     font-size: 16px;
 
@@ -123,9 +124,8 @@
 }
 
 .main {
-    background-color: whitesmoke;
     color: var(--text-dark);
-    height: 300vh;
+    padding: 5px;
     grid-area: main;
 }
 

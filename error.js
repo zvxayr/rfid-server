@@ -4,26 +4,26 @@ const lookup = {
 
 async function handleError(ctx, next) {
     try {
-        await next()
-        if (ctx.body) return
+        await next();
+        if (ctx.body) return;
         
-        const status = ctx.status || 404
+        const status = ctx.status || 404;
         if (status === 404) {
-            ctx.throw(404)
+            ctx.throw(404);
         }
     } catch (err) {
-        ctx.status = err.status || 500
+        ctx.status = err.status || 500;
 
         if (err.code in lookup) {
-            ctx.status = lookup[err.code]
+            ctx.status = lookup[err.code];
         }
 
-        ctx.body = err.message
+        ctx.body = err.message;
     }
 }
 
 function middleware() {
-    return handleError
+    return handleError;
 }
 
-module.exports = middleware
+module.exports = middleware;

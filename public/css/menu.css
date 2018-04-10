@@ -1,0 +1,39 @@
+.main {
+    display: grid;
+    grid-template-rows: 350px 250px;
+}
+
+.week {
+    background-color: tomato;
+    display: flex;
+}
+
+.week .name {
+    height: 50px;
+    line-height: 50px;
+    font-weight: bold;
+    text-align: center;
+}
+
+.day {
+    flex: 1 0 auto;
+    align-self: flex-start;
+}
+
+.meals {
+    display: flex;
+    flex-direction: column;
+}
+
+.meals > a {
+    height: 100px;
+    background-color: olive;
+}
+
+.meals > a:focus {
+    background-color: red;
+}
+
+.display {
+    background-color: skyblue;
+}

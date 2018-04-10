@@ -1,0 +1,15 @@
+.main {
+	display: grid;
+	grid-template-areas: 'day' 'week';
+	grid-template-rows: 256px 256px;
+	grid-template-columns: 1fr;
+	grid-gap: 5px;
+}
+
+.daily {
+	grid-area: day;
+}
+
+.weekly {
+	grid-area: week;
+}

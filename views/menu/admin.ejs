@@ -1,0 +1,54 @@
+<%
+    const days = ['Sun', 'Mon', 'Tue', 'Wed', 'Thr', 'Fri', 'Sat'];
+    const now = (function () {
+        const date = new Date();
+        const rounded = new Date(date.getFullYear(), date.getMonth(), date.getDate());
+        return rounded;
+    })();
+
+    const getDay = function getDay(day) {
+        const date = new Date(now);
+        return new Date(date.setDate(day));
+    }
+%>
+
+<div class='week'>
+    <% days.forEach(function (name, day) { %>
+        <div class='day'>
+            <div class='name'>
+                <%= name %>
+                <%= getDay(day).getDate() %>
+            </div>
+            <div class='meals' data-time='<%= getDay(day).getTime() %>'>
+                <a class='bfast' data-meal='B' href='#display'> bfast </a>
+                <a class='lunch' data-meal='L' href='#display'> lunch </a>
+                <a class='dinnr' data-meal='D' href='#display'> dinnr </a>
+            </div>
+        </div>
+    <% }); %>
+</div>
+
+<div class='display' id='display'>
+    
+</div>
+
+<script type='text/javascript'>
+    (function menu() {
+        const now = new Date(<%= now.getTime() %>);
+        const $week = document.querySelector('.week');
+        const $display = document.querySelector('.display');
+        const getDay = function getDay(day) {
+            const date = new Date(now);
+            return new Date(date.setDate(day));
+        }
+
+        $week.addEventListener('click', (e) => {
+            if (e.target.parentNode.className != 'meals') return;
+
+            const meal = e.target.getAttribute('data-meal');
+            const time = e.target.parentNode.getAttribute('data-time');
+
+            $display.innerHTML = `${meal} ${time}`;
+        });
+    })();
+</script>
