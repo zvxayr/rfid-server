@@ -1,0 +1,73 @@
+.root {
+  display: grid;
+  min-height: 100%;
+  background-color: ghostwhite;
+  font-family: 'Segoe UI Light';
+  font-size: 16px;
+  justify-content: center;
+  align-items: center;
+
+  --primary: #7b1fa2;
+  --primary-light: #ae52d4;
+  --primary-dark: #4a0072;
+
+  --secondary: #ff4081;
+  --secondary-light: #ff79b0;
+  --secondary-dark: #c60055;
+
+  --text-light: gainsboro;
+  --text-dark: darkslategrey;
+}
+
+.main {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  color: var(--text-dark);
+}
+
+#login {
+  display: grid;
+  grid-gap: 5px;
+  margin: 10px;
+}
+
+#login input[type='text'],
+#login input[type='password'] {
+  border: none;
+  border: 1px solid var(--primary-light);
+  border-radius: 14px;
+  padding: 0px 11px;
+  width: 280px;
+  height: 28px;
+  color: var(--text-dark);
+}
+
+#login input[type='text']:focus,
+#login input[type='password']:focus {
+  border: 2px solid var(--primary-light);
+  padding: 0px 10px;
+}
+
+#login button {
+  border: none;
+  background-color: var(--secondary-dark);
+  color: white;
+  border-radius: 14px;
+  height: 28px;
+}
+
+#login button:hover, #login button:focus {
+  background-color: var(--secondary);
+}
+
+#error {
+  height: 20px;
+  color: tomato;
+  text-align: center;
+}
+
+#forgot:hover {
+  color: var(--primary);
+}

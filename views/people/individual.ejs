@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang='en'>
+<head>
+  <meta name='viewport' content='width=device-width, initial-scale=1, minimum-scale=1'>
+  <meta name='description' content='Dining records for PSHS-BRC'>
+  <meta charset='utf-8'>
+  <link rel='stylesheet' type='text/css' href='/css/reset.css'>
+  <link rel='stylesheet' type='text/css' href='/css/individual.css'>
+  <title>Individual Report</title>
+</head>
+<body>
+  <div class='root'>
+    <header>
+      <button id='back'>
+        back
+      </button>
+    </header>
+    <main>
+      <h1>
+        Meals served: <%=count%>
+      </h1>
+    </main>
+  </div>
+  <script type='text/javascript'>
+    const $back = document.getElementById('back');
+    $back.addEventListener('click', () => {
+      window.history.back()
+    });
+  </script>
+</body>
+</html>

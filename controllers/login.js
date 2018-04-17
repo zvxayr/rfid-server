@@ -20,7 +20,6 @@ function route(router) {
       ctx.session.admin = true;
       ctx.session.id = user.id;
       ctx.divert('/dashboard');
-      console.log(ctx.body, ctx.status);
       return;
     }
 

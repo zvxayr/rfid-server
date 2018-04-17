@@ -1,39 +1,146 @@
+form input,
+form select {
+  margin: 0px 0px 0px 0px;
+  border-radius: 14px;
+  border: 1px solid var(--primary-light);
+  padding: 0px 11px;
+  height: 28px;
+  line-height: 28px;
+}
+
+form select {
+  width: 100%;
+}
+
+form input:focus {
+  border: 2px solid var(--primary-light);
+  padding: 0px 10px;
+}
+
+form button {
+  background-color: var(--primary);
+  color: var(--text-light);
+  padding: 2px 10px;
+  height: 28px;
+  border: none;
+  border-radius: 14px;
+}
+
+form button:hover {
+  cursor: pointer;
+}
+
+form button:hover,
+form button:focus {
+  background-color: var(--secondary);
+}
+
+#feedback {
+  height: 20px;
+  display: block;
+}
+
+#feedback.success {
+  color: lime;
+}
+
+#feedback.fail {
+  color: tomato;
+}
+
+
+.cell form {
+  width: 80%;
+}
+
 .main {
-    display: grid;
-    grid-template-rows: 350px 250px;
+  display: grid;
+  grid-template-rows: 1fr auto;
+  grid-gap: 5px;
 }
 
 .week {
-    background-color: tomato;
-    display: flex;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr;
+  grid-template-rows: 1fr 1fr;
+}
+
+.day:nth-child(2) {
+  grid-column: span 2;
+}
+
+@media all and (min-width: 512px) {
+  .main {
+    grid-template-rows: 350px auto;
+  }
+
+  .week {
+    grid-template-columns: 1fr;
+    grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
+  }
+
+  .day:nth-child(2) {
+    grid-column: span 1;
+  }
 }
 
 .week .name {
-    height: 50px;
-    line-height: 50px;
-    font-weight: bold;
-    text-align: center;
+  background-color: var(--secondary);
+  height: 50px;
+  line-height: 50px;
+  font-weight: bold;
+  text-align: center;
 }
 
 .day {
-    flex: 1 0 auto;
-    align-self: flex-start;
+  flex: 1 1 0;
+  align-self: flex-start;
+}
+
+.day:nth-child(3n + 1) {
+  background-color: rgba(0, 0, 0, 0.05);
+}
+
+.day:nth-child(3n + 2) {
+  background-color: rgba(0, 0, 0, 0.075);
+}
+
+.day:nth-child(3n + 3) {
+  background-color: rgba(0, 0, 0, 0.1);
+}
+
+.cell:nth-child(2n + 1) {
+  background-color: rgba(0, 0, 0, 0.1);
 }
 
 .meals {
-    display: flex;
-    flex-direction: column;
+  display: flex;
+  flex-direction: column;
 }
 
 .meals > a {
-    height: 100px;
-    background-color: olive;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  overflow-wrap: all;
+  height: 100px;
+  background-color: transparent;
 }
 
-.meals > a:focus {
-    background-color: red;
+.meals > a.highlight {
+  background-color: var(--primary-light);
 }
 
-.display {
-    background-color: skyblue;
+
+.meals > a:focus,
+.meals > a:hover {
+  background-color: var(--secondary-light);
+}
+
+#other.visible {
+}
+
+#other.hidden {
+  display: none;
 }

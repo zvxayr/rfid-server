@@ -31,7 +31,6 @@ app.context.render = async (path, data, options) => {
 app.context.divert = async function (path) {
 	this.status = 278;
 	this.body = { path };
-	return;
 }
 
 app.use(async (ctx, next) => {

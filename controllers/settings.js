@@ -9,17 +9,18 @@ function route(router) {
       username: ctx.user.username,
       fullname: ctx.user.name,
       title: 'Settings',
-      styles: ['settings']
     };
 
     if (ctx.session.admin) {
+      const style = ['settings'];
       const contents = await ctx.render('settings/admin', ctx.user);
-      return ctx.body = await ctx.render('admin', { contents, ...data });
+      return ctx.body = await ctx.render('admin', { style, contents, ...data });
     }
 
     if (ctx.session.user) {
+      const style = ['settings'];
       const contents = await ctx.render('settings/user', ctx.user);
-      return ctx.body = await ctx.render('user', { contents, ...data });
+      return ctx.body = await ctx.render('user', { style, contents, ...data });
     }
   });
 

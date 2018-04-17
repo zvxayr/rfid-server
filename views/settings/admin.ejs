@@ -1,45 +1,83 @@
-<table>
-	<tbody>
-		<tr>
-			<td> Username </td>
-			<td> <input id='username' type='text' name='username' value='<%= username %>'> </td>
-			<td> <button id='userbtn'> Save </button> </td>
-		</tr>
-		<tr>
-			<td> Password </td>
-			<td> <input id='password' type='password' name='username' autocomplete='new-password'> </td>
-			<td> <button id='passbtn'> Save </button> </td>
-		</tr>
-	</tbody>
-</table>
-<span id='feedback'></span>
+<div class='setting'>
+  <h3>Security</h3>
+  <table>
+    <tbody>
+      <tr>
+        <td>Username</td>
+        <td><input id='username' type='text' name='username' value=<%=username%>></td>
+        <td><button id='userbtn'>Save</button></td>
+      </tr>
+      <tr>
+        <td>Password</td>
+        <td><input id='password' type='password' name='username' autocomplete='new-password'></td>
+        <td><button id='passbtn'>Save</button></td>
+      </tr>
+    </tbody>
+  </table>
+  <span id='feedback' class='success'></span>
+</div>
+
+<div class='setting'>
+  <h3>Configuration</h3>
+  <table>
+    <tbody>
+      <tr>
+        <td>Breakfast Start</td>
+        <td><input type='time' name='bfast' id='bfast' value='05:00'></td>
+      </tr>
+      <tr>
+        <td>Lunch Start</td>
+        <td><input type='time' name='lunch' id='lunch' value='10:00'></td>
+      </tr>
+      <tr>
+        <td>Dinner Start</td>
+        <td><input type='time' name='dinnr' id='dinnr' value='16:00'></td>
+        <td><button id='config'>Save</button></td>
+      </tr>
+    </tbody>
+  </table>
+</div>
 
 <script type='text/javascript'>
-	const $user = document.getElementById('username');
-	const $ubtn = document.getElementById('userbtn');
-	const $pass = document.getElementById('password');
-	const $pbtn = document.getElementById('passbtn');
+  const $usernameField = document.getElementById('username');
+  const $saveUsername = document.getElementById('userbtn');
+  const $passwordField = document.getElementById('password');
+  const $savePassword = document.getElementById('passbtn');
+  const $feedback = document.getElementById('feedback');
 
-	const options = {
-		method: 'POST',
-		headers: {
-			'Content-Type': 'application/json',
-			'X-HTTP-Method-Override': 'POST'
-		},
-		credentials: 'same-origin'
-	}
+  const options = {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      'X-HTTP-Method-Override': 'POST'
+    },
+    credentials: 'same-origin'
+  }
 
-	$ubtn.addEventListener('click', (e) => {
-		fetch('/settings/username', {
-			body: JSON.stringify({ username: $user.value }),
-			...options
-		}).then(console.log, console.log);
-	});
+  $saveUsername.addEventListener('click', async (e) => {
+    const res = await fetch('/settings/username', {
+      body: JSON.stringify({ username: $usernameField.value }),
+      ...options
+    });
 
-	$pbtn.addEventListener('click', (e) => {
-		fetch('/settings/password', {
-			body: JSON.stringify({ password: $pass.value }),
-			...options
-		}).then(console.log, console.log);
-	});
+    if (res.ok) {
+      $feedback.innerHTML = 'Username changed!';
+      return $feedback.classList.replace('fail', 'success');
+    }
+
+    $feedback.innerHTML = 'Username already taken';
+    return $feedback.classList.replace('success', 'fail');
+  });
+
+  $savePassword.addEventListener('click', async (e) => {
+    const res = await fetch('/settings/password', {
+      body: JSON.stringify({ password: $passwordField.value }),
+      ...options
+    });
+
+    if (res.ok) {
+      $feedback.innerHTML = 'Password changed!';
+      return $feedback.classList.replace('fail', 'success');
+    }
+  });
 </script>

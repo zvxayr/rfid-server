@@ -1,218 +1,218 @@
 .root {
-    min-height: 100%;
-    display: grid;
-    grid-template-rows: 48px 64px 1fr;
-    grid-template-columns: 1fr;
-    grid-template-areas: 'head' 'nav' 'main';
+  min-height: 100%;
+  display: grid;
+  grid-template-rows: 48px 64px 1fr;
+  grid-template-columns: 1fr;
+  grid-template-areas: 'head' 'nav' 'main';
 
-    background-color: whitesmoke;
-    font-family: 'Segoe UI Light';
-    font-size: 16px;
+  background-color: whitesmoke;
+  font-family: 'Segoe UI Light';
+  font-size: 16px;
 
-    --primary: #7b1fa2;
-    --primary-light: #ae52d4;
-    --primary-dark: #4a0072;
+  --primary: #7b1fa2;
+  --primary-light: #ae52d4;
+  --primary-dark: #4a0072;
 
-    --secondary: #ff4081;
-    --secondary-light: #ff79b0;
-    --secondary-dark: #c60055;
+  --secondary: #ff4081;
+  --secondary-light: #ff79b0;
+  --secondary-dark: #c60055;
 
-    --text-light: gainsboro;
-    --text-dark: darkslategrey;
+  --text-light: gainsboro;
+  --text-dark: darkslategrey;
 }
 
 .header {
-    background-color: var(--primary);
-    color: var(--text-light);
-    display: flex;
-    grid-area: head;
-    width: 100%;
-    height: 48px;
+  background-color: var(--primary);
+  color: var(--text-light);
+  display: flex;
+  grid-area: head;
+  width: 100%;
+  height: 48px;
 }
 
 .account {
-    display: grid;
-    grid-template-areas: 'pic';
-    width: 48px;
+  display: grid;
+  grid-template-areas: 'pic';
+  width: 48px;
 }
 
 .account-username, .account-fullname {
-    display: none;
+  display: none;
 }
 
 .account-picture {
-    grid-area: pic;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+  grid-area: pic;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .account-picture img {
-    width: 36px;
-    height: 36px;
-    border-radius: 50%;
-    overflow: hidden;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  overflow: hidden;
 }
 
 .account-username { grid-area: un }
 .account-fullname { grid-area: fn }
 
 .logo {
-    flex: 1;
+  flex: 1;
 }
 
 .logout {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background-color: rgba(0, 0, 0, 0.1);
-    min-width: 48px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: rgba(0, 0, 0, 0.1);
+  min-width: 48px;
 }
 
 .logout:hover,
 .logout:focus {
-    background-color: rgba(0, 0, 0, 0.2);
+  background-color: rgba(0, 0, 0, 0.2);
 }
 
 .nav {
-    background-color: var(--primary-dark);
-    color: var(--text-light);
-    display: flex;
-    grid-area: nav;
-    position: sticky;
-    top: 0px;
+  background-color: var(--primary-dark);
+  color: var(--text-light);
+  display: flex;
+  grid-area: nav;
+  position: sticky;
+  top: 0px;
 }
 
 .nav .nav-item {
-    display: flex;
-    align-items: stretch;
-    justify-content: center;
-    flex: 1;
+  display: flex;
+  align-items: stretch;
+  justify-content: center;
+  flex: 1;
 }
 
 .nav .nav-item.active {
-    background-color: rgba(0, 0, 0, 0.2);
+  background-color: rgba(0, 0, 0, 0.2);
 }
 
 .nav .nav-item:hover,
 .nav .nav-item:focus {
-    background-color: rgba(0, 0, 0, 0.3);
+  background-color: rgba(0, 0, 0, 0.3);
 }
 
 .nav-item .nav-icon {
-    width: 64px;
-    height: 64px;
-    display: inline-flex;
-    justify-content: center;
+  width: 64px;
+  height: 64px;
+  display: inline-flex;
+  justify-content: center;
 }
 
 .nav-item .nav-text {
-    text-indent: 1em;
-    font-size: 1.125em;
-    display: none;
-    flex: 1;
+  text-indent: 1em;
+  font-size: 1.125em;
+  display: none;
+  flex: 1;
 }
 
 .nav-icon svg {
-    align-self: center;
-    fill: silver;
-    width: 36px;
+  align-self: center;
+  fill: silver;
+  width: 36px;
 }
 
 .nav-item.active .nav-icon svg {
-    fill: var(--secondary);
+  fill: var(--secondary);
 }
 
 .main {
-    color: var(--text-dark);
-    padding: 5px;
-    grid-area: main;
+  color: var(--text-dark);
+  padding: 5px;
+  grid-area: main;
 }
 
 @media all and (min-width: 512px) {
-    .root {
-        grid-template-rows: 48px 1fr;
-        grid-template-columns: 64px 1fr;
-        grid-template-areas: 'head head' 'nav main';
-    }
-    .header {
-        height: 48px;
-        position: fixed;
-    }
-    .account,
-    .logout { width: 64px; }
+  .root {
+    grid-template-rows: 48px 1fr;
+    grid-template-columns: 64px 1fr;
+    grid-template-areas: 'head head' 'nav main';
+  }
+  .header {
+    height: 48px;
+    position: fixed;
+  }
+  .account,
+  .logout { width: 64px; }
 
-    .account {
-        background-color: var(--primary-dark);
-    }
+  .account {
+    background-color: var(--primary-dark);
+  }
 
-    .nav {
-        position: fixed;
-        top: 48px;
-        height: 100%;
-        width: 64px;
-        flex-direction: column;
-    }
+  .nav {
+    position: fixed;
+    top: 48px;
+    height: 100%;
+    width: 64px;
+    flex-direction: column;
+  }
 
-    .nav .nav-item {
-        height: 64px;
-        flex: 0 0 auto;
-        background-color: rgba(0, 0, 0, 0.1);
-    }
+  .nav .nav-item {
+    height: 64px;
+    flex: 0 0 auto;
+    background-color: rgba(0, 0, 0, 0.1);
+  }
 }
 
 @media all and (min-width: 628px) {
-    .root {
-        grid-template-rows: 96px 1fr;
-    }
-    .header {
-        height: 96px;
-    }
-    .account-picture img {
-        width: 48px;
-        height: 48px;
-    }
-    .nav {
-        top: 96px;
-    }
+  .root {
+    grid-template-rows: 96px 1fr;
+  }
+  .header {
+    height: 96px;
+  }
+  .account-picture img {
+    width: 48px;
+    height: 48px;
+  }
+  .nav {
+    top: 96px;
+  }
 }
 
 @media all and (min-width: 800px) {
-    .root {
-        grid-template-rows: 96px 1fr;
-        grid-template-columns: 256px;
-        grid-template-areas: 'head head' 'nav main';
-    }
+  .root {
+    grid-template-rows: 96px 1fr;
+    grid-template-columns: 256px;
+    grid-template-areas: 'head head' 'nav main';
+  }
 
-    .account {
-        width: 256px;
-        padding: 16px;
-        box-sizing: border-box;
-        grid-template-rows: 1fr 1fr;
-        grid-template-columns: 64px 1fr;
-        grid-template-areas: 'pic un' 'pic fn';
-    }
+  .account {
+    width: 256px;
+    padding: 16px;
+    box-sizing: border-box;
+    grid-template-rows: 1fr 1fr;
+    grid-template-columns: 64px 1fr;
+    grid-template-areas: 'pic un' 'pic fn';
+  }
 
-    .nav {
-        width: 256px;
-    }
+  .nav {
+    width: 256px;
+  }
 
-    .nav .nav-icon {
-        background-color: rgba(0, 0, 0, 0.2);
-    }
+  .nav .nav-icon {
+    background-color: rgba(0, 0, 0, 0.2);
+  }
 
-    .nav .nav-text {
-        background-color: rgba(0, 0, 0, 0.1);
-        display: flex;
-        align-items: center;
-    }
+  .nav .nav-text {
+    background-color: rgba(0, 0, 0, 0.1);
+    display: flex;
+    align-items: center;
+  }
 
-    .account-fullname {
-        display: block;
-    }
+  .account-fullname {
+    display: block;
+  }
 
-    .account-username {
-        display: flex;
-        align-items: flex-end;
-    }
+  .account-username {
+    display: flex;
+    align-items: flex-end;
+  }
 }

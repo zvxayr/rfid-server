@@ -9,17 +9,20 @@ function route(router) {
       username: ctx.user.username,
       fullname: ctx.user.name,
       title: 'Dashboard',
-      styles: ['dashboard']
     };
 
     if (ctx.session.admin) {
-      const contents = await ctx.render('dashboard/admin');
-      return ctx.body = await ctx.render('admin', { contents, ...data });
+      const style = ['dashboard'];
+      const count = await ctx.db.Interaction.find().count();
+      const contents = await ctx.render('dashboard/admin', {count});
+      return ctx.body = await ctx.render('admin', { style, contents, ...data });
     }
 
     if (ctx.session.user) {
-      const contents = await ctx.render('dashboard/user');
-      return ctx.body = await ctx.render('user', { contents, ...data });
+      const style = ['dashboard'];
+      const count = await ctx.db.Interaction.find({userID: ctx.user.id}).count();
+      const contents = await ctx.render('dashboard/user', {count});
+      return ctx.body = await ctx.render('user', { style, contents, ...data });
     }
   });
 

@@ -4,10 +4,10 @@ const saltRounds = 10;
 
 const name = 'Admin';
 const schema = new mongoose.Schema({
-  name: { type: String, unique: true, trim: true },
+  name: { type: String, trim: true, unique: true },
   sex: { type: String, enum: ['M', 'F'] },
-  username: { type: String, unique: true, trim: true },
-  email: { type: String, trim: true },
+  username: { type: String, trim: true, unique: true },
+  email: { type: String, trim: true, unique: true },
   password: String,
 });
 

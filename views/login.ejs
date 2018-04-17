@@ -1,43 +1,57 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <meta name='viewport' content='width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1'>
-    <link rel='stylesheet' type='text/css' href='/css/reset.css'>
-    <title> Login </title>
+  <meta name='viewport' content='width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1'>
+  <link rel='stylesheet' type='text/css' href='/css/reset.css'>
+  <link rel='stylesheet' type='text/css' href='/css/login.css'>
+  <title>Login</title>
 </head>
 <body>
-    <form id='login' method='POST'>
-        <input type='text' name='username'>
-        <input type='password' name='password'>
-        <input type='submit'>
-    </form>
+  <div class='root'>
+    <div class='main'>
+      <h3>Member Login</h3>
+      <form id='login' method='POST'>
+        <input type='text' name='username' placeholder='Username'>
+        <input type='password' name='password' placeholder='Password'>
+        <span id='error'>  </span>
+        <button>Login</button>
+      </form>
+      <a id='forgot' href='/forgot'>Forgot Username/Password</a>
+    </div>
+  </div>
 
-    <script type='text/javascript'>
-        const $login = document.getElementById('login');
+  <script type='text/javascript'>
+    const $login = document.getElementById('login');
+    const $error = document.getElementById('error');
 
-        $login.addEventListener('submit', async (e) => {
-            e.preventDefault();
+    $login.addEventListener('submit', async (e) => {
+      e.preventDefault();
 
-            const response = await fetch('/login', {
-                method: 'POST',
-                body: JSON.stringify({
-                    username: $login.username.value,
-                    password: $login.password.value
-                }),
-                headers: {
-                    'Content-Type': 'application/json',
-                    'X-HTTP-Method-Override': 'POST'
-                },
-                follow: 0,
-                credentials: 'same-origin'
-            });
+      const response = await fetch('/login', {
+        method: 'POST',
+        body: JSON.stringify({
+          username: $login.username.value,
+          password: $login.password.value
+        }),
+        headers: {
+          'Content-Type': 'application/json',
+          'X-HTTP-Method-Override': 'POST'
+        },
+        credentials: 'same-origin'
+      });
 
-            console.log(response)
+      if (response.status == 278) {
+        window.location.assign((await response.json()).path)
+      }
 
-            if (response.status == 278) {
-                window.location.assign((await response.json()).path)
-            }
-        });
-    </script>
+      if (!response.ok) {
+        $error.innerHTML = (await response.json()).error;
+      }
+    });
+
+    $login.addEventListener('change', async (e) => {
+      $error.innerHTML = '';
+    })
+  </script>
 </body>
 </html>

@@ -12,9 +12,9 @@ mongoose.connect('mongodb://localhost:27017/rfid');
 
 fs
   .readdirSync(__dirname)
-  .filter(file => path.extname(file) == '.js' && path.basename(file, '.js') != 'index')
+  .filter(file => (path.extname(file) == '.js') && (path.basename(file, '.js') != 'index'))
   .map(file => require(`./${file}`))
-  .forEach(model => {
+  .forEach((model) => {
     exports[model.collection.collectionName] = model;
   });
 

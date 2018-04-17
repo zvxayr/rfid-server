@@ -1,1 +1,43 @@
-People
+<form method='GET' id='search-bar'>
+  <input type='text' name='query' placeholder='Search'>
+</form>
+<section id='results'>
+  No Result
+</section>
+<script type='text/javascript'>
+  const $search = document.getElementById('search-bar');
+  const $result = document.getElementById('results');
+  const populate = async (query) => {
+    const res = await fetch(`/people/search?q=${query}`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'X-HTTP-Method-Override': 'GET'
+      },
+      credentials: 'same-origin'
+    });
+
+    const people = await res.json();
+    if (people.length == 0) {
+      return $result.innerHTML = 'No Result';
+    }
+
+    $result.innerHTML = '';
+    people.forEach((person) => {
+      const result = document.createElement('a');
+      result.setAttribute('href', `/people/${person.username}`);
+      result.classList.add('result');
+      result.innerHTML = person.name;
+
+      $result.appendChild(result);
+    });
+  }
+
+  $search.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    await populate($search.query.value);
+  });
+
+  if ($search.query.value != '')
+    populate($search.query.value);
+</script>

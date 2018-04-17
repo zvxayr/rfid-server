@@ -5,12 +5,13 @@ const saltRounds = 10;
 const name = 'User';
 
 const schema = new mongoose.Schema({
-  name: { type: String, unique: true },
+  name: { type: String, trim: true, unique: true },
   sex: { type: String, enum: ['M', 'F'] },
-  cardUID: { type: String, unique: true },
-  username: { type: String, unique: true },
-  email: { type: String, trim: true },
+  cardUID: { type: String, trim: true, unique: true },
+  username: { type: String, trim: true, unique: true },
+  email: { type: String, trim: true, unique: true },
   password: String,
+  state: Boolean,
 });
 
 schema.pre('save', async function() {

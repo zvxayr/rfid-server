@@ -1,54 +1,146 @@
 <%
-    const days = ['Sun', 'Mon', 'Tue', 'Wed', 'Thr', 'Fri', 'Sat'];
-    const now = (function () {
-        const date = new Date();
-        const rounded = new Date(date.getFullYear(), date.getMonth(), date.getDate());
-        return rounded;
-    })();
+  const days = ['Sun', 'Mon', 'Tue', 'Wed', 'Thr', 'Fri', 'Sat'];
+  const now = (function () {
+    const date = new Date();
+    const rounded = new Date(date.getFullYear(), date.getMonth(), date.getDate());
+    return rounded;
+  })();
 
-    const getDay = function getDay(day) {
-        const date = new Date(now);
-        return new Date(date.setDate(day));
+  const getDay = function getDay(day) {
+    const date = new Date(now);
+    const currentDay = date.getDay();
+    const distance = day - currentDay;
+    date.setDate(date.getDate() + distance);
+    return date;
+  }
+
+  const dArray = function getDateArray(date) {
+    return String([date.getFullYear(), date.getMonth(), date.getDate()]);
+  }
+
+  const dateTable = [0, 1, 2, 3, 4, 5, 6]
+    .map(getDay).map(dArray).map(String);
+
+  const mealTable = ['B', 'L', 'D'];
+
+  const Menu = menu.reduce(function (all, m) {
+    all[m._id] = m.name;
+    return all;
+  }, {});
+
+  const Meals = meals.map(function (meal) {
+    let obj = {};
+    obj.date = dateTable.indexOf(meal.date);
+    obj.meal = mealTable.indexOf(meal.meal);
+    obj.menu = Menu[meal.menuID];
+    return obj;
+  }).reduce(function (all, m) {
+    if (m.date in all) {
+      all[m.date].push(m);
+    } else {
+      all[m.date] = [m];
     }
+    return all;
+  }, []);
+
+  function mealMap(day, meal) {
+    if (!(day in Meals)) return '';
+    if (!(meal in Meals[day])) return '';
+    if (!('menu' in Meals[day][meal])) return '';
+
+    return Meals[day][meal].menu;
+  }
 %>
-
 <div class='week'>
-    <% days.forEach(function (name, day) { %>
-        <div class='day'>
-            <div class='name'>
-                <%= name %>
-                <%= getDay(day).getDate() %>
-            </div>
-            <div class='meals' data-time='<%= getDay(day).getTime() %>'>
-                <a class='bfast' data-meal='B' href='#display'> bfast </a>
-                <a class='lunch' data-meal='L' href='#display'> lunch </a>
-                <a class='dinnr' data-meal='D' href='#display'> dinnr </a>
-            </div>
-        </div>
-    <% }); %>
+  <% days.forEach(function (name, day) { %>
+    <div class='day'>
+      <div class='name'><%=name%> <%=getDay(day).getDate()%></div>
+      <div class='meals'>
+        <% ['bfast', 'lunch', 'dinnr'].forEach(function(mname, meal) { %>
+          <a class='<% mname %> cell <%=(day==0 && meal==0)?"highlight":""%>' id='<%=name.toLowerCase()%>-bfast'>
+            <form method='POST' data-date='<%=dArray(getDay(day))%>' data-meal='<%=mname[0].toUpperCase()%>'>
+              <select name='menu'>
+                <option value=''>choose</option>
+                <% menu.forEach(function(item) { %>
+                  <option value='<%=item.name%>' <%if(mealMap(day, meal) == item.name) { %> selected <% } %> ><%=item.name%></option>
+                <% }); %>
+              </select>
+            </form>
+          </a>
+        <% }); %>
+      </div>
+    </div>
+  <% }); %>
 </div>
-
-<div class='display' id='display'>
-    
+<div>
+  Create New Menu
+  <form method='POST' id='new-menu'>
+    <input type='text' name='name'>
+    <button>Create New</button>
+  </form>
+  <span id='feedback' class='success'></span>
 </div>
-
 <script type='text/javascript'>
-    (function menu() {
-        const now = new Date(<%= now.getTime() %>);
-        const $week = document.querySelector('.week');
-        const $display = document.querySelector('.display');
-        const getDay = function getDay(day) {
-            const date = new Date(now);
-            return new Date(date.setDate(day));
-        }
+  const $week = document.querySelector('.week');
+  const $nmenu = document.getElementById('new-menu');
+  const $fback = document.getElementById('feedback');
 
-        $week.addEventListener('click', (e) => {
-            if (e.target.parentNode.className != 'meals') return;
+  $week.addEventListener('click', (e) => {
+    if (e.target.tagName == 'SELECT') {
+      document.querySelector('.highlight').classList.remove('highlight');
+      e.target.parentNode.parentNode.classList.add('highlight');
+    }
 
-            const meal = e.target.getAttribute('data-meal');
-            const time = e.target.parentNode.getAttribute('data-time');
+    if (e.target.parentNode.className != 'meals') return;
 
-            $display.innerHTML = `${meal} ${time}`;
-        });
-    })();
+    document.querySelector('.highlight').classList.remove('highlight');
+    e.target.classList.add('highlight');
+  });
+
+  $week.addEventListener('change', async (e) => {
+    const menu = e.target.value;
+    if (menu == '') return;
+    const date = e.target.parentNode.getAttribute('data-date');
+    const meal = e.target.parentNode.getAttribute('data-meal');
+    console.log({ menu, date, meal });
+
+    await fetch('/menu/addmeal', {
+      method: 'POST',
+      body: JSON.stringify({menu, date, meal}),
+      headers: {
+        'Content-Type': 'application/json',
+        'X-HTTP-Method-Override': 'POST'
+      },
+      credentials: 'same-origin'
+    });
+  });
+
+  $nmenu.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const menu = $nmenu.name.value;
+    if (menu == '') return;
+    const res = await fetch('/menu/newmenu', {
+      method: 'POST',
+      body: JSON.stringify({menu}),
+      headers: {
+        'Content-Type': 'application/json',
+        'X-HTTP-Method-Override': 'POST'
+      },
+      credentials: 'same-origin'
+    });
+    console.log(res);
+    if (!res.ok) {
+      $fback.classList.replace('success', 'fail');
+      $fback.innerHTML = (await res.json()).error;
+      return;
+    }
+
+    $fback.classList.replace('fail', 'success');
+    $fback.innerHTML = 'Created';
+    document.querySelectorAll('select').forEach(function(tag) {
+      let option = document.createElement('option');
+      option.innerHTML = option.value = menu;
+      tag.appendChild(option);
+    });
+  });
 </script>

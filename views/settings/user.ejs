@@ -1,1 +1,62 @@
-Settings
+<div class='setting'>
+  <h3>Security</h3>
+  <table>
+    <tbody>
+      <tr>
+        <td>Username</td>
+        <td><input id='username' type='text' name='username' value=<%=username%>></td>
+        <td><button id='userbtn'>Save</button></td>
+      </tr>
+      <tr>
+        <td>Password</td>
+        <td><input id='password' type='password' name='username' autocomplete='new-password'></td>
+        <td><button id='passbtn'>Save</button></td>
+      </tr>
+    </tbody>
+  </table>
+  <span id='feedback' class='success'></span>
+</div>
+
+<script type='text/javascript'>
+  const $usernameField = document.getElementById('username');
+  const $saveUsername = document.getElementById('userbtn');
+  const $passwordField = document.getElementById('password');
+  const $savePassword = document.getElementById('passbtn');
+  const $feedback = document.getElementById('feedback');
+
+  const options = {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      'X-HTTP-Method-Override': 'POST'
+    },
+    credentials: 'same-origin'
+  }
+
+  $saveUsername.addEventListener('click', async (e) => {
+    const res = await fetch('/settings/username', {
+      body: JSON.stringify({ username: $usernameField.value }),
+      ...options
+    });
+
+    if (res.ok) {
+      $feedback.innerHTML = 'Username changed!';
+      return $feedback.classList.replace('fail', 'success');
+    }
+
+    $feedback.innerHTML = 'Username already taken';
+    return $feedback.classList.replace('success', 'fail');
+  });
+
+  $savePassword.addEventListener('click', async (e) => {
+    const res = await fetch('/settings/password', {
+      body: JSON.stringify({ password: $passwordField.value }),
+      ...options
+    });
+
+    if (res.ok) {
+      $feedback.innerHTML = 'Password changed!';
+      return $feedback.classList.replace('fail', 'success');
+    }
+  });
+</script>

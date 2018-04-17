@@ -6,7 +6,7 @@ const ObjectId = Schema.ObjectId;
 const name = 'Meal';
 
 const schema = new mongoose.Schema({
-  date: [Number],
+  date: String,
   meal: { type: String, enum: ['B', 'L', 'D'] },
   menuID: ObjectId
 });

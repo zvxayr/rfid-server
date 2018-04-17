@@ -1,0 +1,39 @@
+.root {
+  display: grid;
+  min-height: 100%;
+
+  grid-template-rows: 1fr;
+  grid-template-columns: 1fr;
+
+  background-color: whitesmoke;
+  font-family: 'Segoe UI Light';
+  font-size: 16px;
+
+  --primary: #7b1fa2;
+  --primary-light: #ae52d4;
+  --primary-dark: #4a0072;
+
+  --secondary: #ff4081;
+  --secondary-light: #ff79b0;
+  --secondary-dark: #c60055;
+
+  --text-light: gainsboro;
+  --text-dark: darkslategrey;
+}
+
+.hero {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+#login {
+  background-color: var(--primary);
+  color: var(--text-light);
+  padding: 10px 20px;
+}
+
+#login:hover,
+#login:focus {
+  background-color: var(--primary-light);
+}

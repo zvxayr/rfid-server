@@ -1,1 +1,65 @@
-Menu
+<%
+  const days = ['Sun', 'Mon', 'Tue', 'Wed', 'Thr', 'Fri', 'Sat'];
+  const now = (function () {
+    const date = new Date();
+    const rounded = new Date(date.getFullYear(), date.getMonth(), date.getDate());
+    return rounded;
+  })();
+
+  const getDay = function getDay(day) {
+    const date = new Date(now);
+    const currentDay = date.getDay();
+    const distance = day - currentDay;
+    date.setDate(date.getDate() + distance);
+    return date;
+  }
+
+  const dArray = function getDateArray(date) {
+    return String([date.getFullYear(), date.getMonth(), date.getDate()]);
+  }
+
+  const dateTable = [0, 1, 2, 3, 4, 5, 6]
+    .map(getDay).map(dArray).map(String);
+
+  const mealTable = ['B', 'L', 'D'];
+
+  const Menu = menu.reduce(function (all, m) {
+    all[m._id] = m.name;
+    return all;
+  }, {});
+
+  const Meals = meals.map(function (meal) {
+    let obj = {};
+    obj.date = dateTable.indexOf(meal.date);
+    obj.meal = mealTable.indexOf(meal.meal);
+    obj.menu = Menu[meal.menuID];
+    return obj;
+  }).reduce(function (all, m) {
+    if (m.date in all) {
+      all[m.date].push(m);
+    } else {
+      all[m.date] = [m];
+    }
+    return all;
+  }, []);
+
+  function mealMap(day, meal) {
+    if (!(day in Meals)) return '';
+    if (!(meal in Meals[day])) return '';
+    if (!('menu' in Meals[day][meal])) return '';
+
+    return Meals[day][meal].menu;
+  }
+%>
+<div class='week'>
+  <% days.forEach(function (name, day) { %>
+    <div class='day'>
+      <div class='name'><%=name%> <%=getDay(day).getDate()%></div>
+      <div class='meals' data-date='<%=dArray(getDay(day))%>'>
+        <a class='bfast cell' id='<%=name.toLowerCase()%>-bfast'><%=mealMap(day, 0)%></a>
+        <a class='lunch cell' id='<%=name.toLowerCase()%>-lunch'><%=mealMap(day, 1)%></a>
+        <a class='dinnr cell' id='<%=name.toLowerCase()%>-dinnr'><%=mealMap(day, 2)%></a>
+      </div>
+    </div>
+  <% }); %>
+</div>
